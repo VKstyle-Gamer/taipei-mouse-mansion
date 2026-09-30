@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>鼠鼠搬家大作戰｜台北豪宅夢</title>
+<style>
+:root{
+  --ink:#594d58;
+  --muted:#8c7f89;
+  --paper:#fffaf6;
+  --cream:#f7eee6;
+  --pink:#f3c9cc;
+  --mint:#cfe3d8;
+  --lav:#d8cfe6;
+  --gold:#e7ca8e;
+  --shadow:0 12px 30px rgba(73,55,66,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:ui-rounded,"SF Pro Rounded","PingFang TC","Noto Sans TC",system-ui,sans-serif;color:var(--ink);background:#efe8e1}
+body{
+  display:flex;justify-content:center;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(255,255,255,.8),transparent 28%),
+    linear-gradient(#d9ecea 0 31%,#eadfd6 31% 100%);
+}
+.app{width:min(100%,760px);min-height:100vh;position:relative;overflow:hidden;padding:14px 14px 28px}
+.skyline{position:absolute;left:0;right:0;top:0;height:220px;pointer-events:none;overflow:hidden}
+.skyline:before{
+  content:"";position:absolute;inset:auto 0 0;height:88px;opacity:.32;
+  background:
+    linear-gradient(90deg,
+      transparent 0 3%,#6c7c80 3% 9%,transparent 9% 12%,
+      #708488 12% 20%,transparent 20% 24%,#7c8c8d 24% 29%,transparent 29% 33%,
+      #6d8387 33% 40%,transparent 40% 45%,#71878b 45% 51%,transparent 51% 54%,
+      #708487 54% 63%,transparent 63% 67%,#78888a 67% 74%,transparent 74% 79%,
+      #708285 79% 88%,transparent 88% 100%);
+  clip-path:polygon(0 45%,7% 45%,7% 20%,10% 20%,10% 58%,19% 58%,19% 32%,23% 32%,23% 65%,31% 65%,31% 40%,36% 40%,36% 72%,43% 72%,43% 52%,49% 52%,49% 66%,57% 66%,57% 37%,63% 37%,63% 74%,72% 74%,72% 47%,79% 47%,79% 70%,89% 70%,89% 34%,95% 34%,95% 62%,100% 62%,100% 100%,0 100%);
+}
+.taipei101{position:absolute;right:8%;bottom:3px;width:40px;height:150px;opacity:.4}
+.taipei101 span{position:absolute;left:50%;transform:translateX(-50%);background:#617b80;border-radius:3px}
+.taipei101 .a{bottom:0;width:34px;height:58px}
+.taipei101 .b{bottom:55px;width:29px;height:26px}
+.taipei101 .c{bottom:78px;width:25px;height:25px}
+.taipei101 .d{bottom:100px;width:21px;height:21px}
+.taipei101 .e{bottom:119px;width:15px;height:17px}
+.taipei101 .f{bottom:134px;width:5px;height:16px}
+.topbar{position:relative;z-index:2;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.brand{
+  background:rgba(255,250,246,.86);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.8);border-radius:22px;padding:10px 14px;box-shadow:var(--shadow)
+}
+.brand b{display:block;font-size:18px;letter-spacing:.03em}
+.brand small{color:var(--muted);font-weight:700}
+.sound{width:44px;height:44px;border:0;border-radius:15px;background:rgba(255,250,246,.9);box-shadow:var(--shadow);font-size:20px;cursor:pointer}
+.hero{
+  position:relative;z-index:2;margin:12px 0 10px;
+  display:grid;grid-template-columns:1.25fr .75fr;gap:10px
+}
+.card{background:rgba(255,250,246,.92);border:1px solid rgba(255,255,255,.75);border-radius:22px;box-shadow:var(--shadow)}
+.story{padding:14px 16px;min-height:110px;display:flex;gap:12px;align-items:center}
+.mouse{width:78px;height:78px;flex:0 0 auto}
+.story h1{font-size:21px;line-height:1.12;margin:0 0 6px}
+.story p{font-size:12px;line-height:1.5;margin:0;color:var(--muted);font-weight:700}
+.next{padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.next small{font-weight:800;color:var(--muted)}
+.nextTile{margin-top:5px;width:62px;height:62px;border-radius:18px;background:#f4e5d7;display:grid;place-items:center;font-size:34px;border:2px solid white;box-shadow:inset 0 -5px 0 rgba(70,50,50,.05)}
+.stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:9px}
+.stat{padding:10px 12px;text-align:center}
+.stat small{display:block;color:var(--muted);font-size:11px;font-weight:800}
+.stat strong{font-size:19px}
+.goal{position:relative;z-index:2;padding:11px 13px;margin-bottom:9px;display:flex;align-items:center;gap:10px}
+.goalIcon{font-size:22px}
+.goalText{flex:1}
+.goalText b{font-size:13px}
+.goalText small{display:block;color:var(--muted);margin-top:2px;font-weight:700}
+.progress{height:7px;background:#eadfd6;border-radius:99px;margin-top:6px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e8b0b6,#d2bd83);border-radius:99px;transition:.3s}
+.boardWrap{position:relative;z-index:2;padding:10px}
+.board{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:5px;
+  background:#d8c7bb;border:5px solid #fff4ed;border-radius:24px;padding:7px;
+  box-shadow:inset 0 0 0 2px rgba(99,74,70,.08);
+}
+.cell{
+  aspect-ratio:1;border:0;border-radius:14px;background:rgba(255,250,246,.72);
+  display:grid;place-items:center;cursor:pointer;position:relative;padding:0;
+  transition:transform .12s,background .2s,box-shadow .2s;
+}
+.cell:active{transform:scale(.94)}
+.cell:hover{background:#fff}
+.cell.filled{box-shadow:inset 0 -4px 0 rgba(75,55,65,.05)}
+.cell.selected{outline:3px solid #8d7fb0;outline-offset:-3px}
+.tile{font-size:clamp(23px,7.4vw,43px);filter:drop-shadow(0 3px 0 rgba(0,0,0,.05));animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.35) rotate(-8deg);opacity:.2}to{transform:scale(1);opacity:1}}
+.merge{animation:merge .36s ease}
+@keyframes merge{0%{transform:scale(1)}45%{transform:scale(1.33) rotate(5deg)}100%{transform:scale(1)}}
+.tools{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}
+.tool{border:0;padding:10px 8px;border-radius:18px;background:rgba(255,250,246,.93);box-shadow:var(--shadow);color:var(--ink);cursor:pointer;font-weight:900}
+.tool .ico{font-size:22px;display:block;margin-bottom:2px}
+.tool small{display:block;color:var(--muted);font-weight:800}
+.tool.active{outline:3px solid #8d7fb0;background:#f5efff}
+.tip{position:relative;z-index:2;text-align:center;margin:12px 10px 0;font-size:12px;color:#776a72;font-weight:800}
+.legend{position:relative;z-index:2;margin-top:10px;padding:12px 14px}
+.legend b{font-size:13px}
+.path{display:flex;gap:7px;overflow:auto;padding:8px 0 2px;scrollbar-width:none}
+.path::-webkit-scrollbar{display:none}
+.step{min-width:70px;text-align:center;background:#f8eee8;border-radius:14px;padding:7px 5px}
+.step span{display:block;font-size:24px}
+.step small{font-size:10px;color:var(--muted);font-weight:800}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%) translateY(18px);bottom:28px;z-index:20;
+  background:#574b54;color:white;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:900;
+  opacity:0;pointer-events:none;transition:.2s;box-shadow:0 12px 28px rgba(0,0,0,.18)
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.combo{
+  position:absolute;z-index:8;left:50%;top:49%;transform:translate(-50%,-50%) scale(.8);
+  font-size:30px;font-weight:1000;color:#fff;text-shadow:0 3px 0 #8f6071,0 7px 20px rgba(100,55,75,.28);
+  opacity:0;pointer-events:none
+}
+.combo.show{animation:combo .65s ease}
+@keyframes combo{0%{opacity:0;transform:translate(-50%,-35%) scale(.65)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-65%) scale(.95)}}
+.modal{
+  position:fixed;inset:0;background:rgba(69,58,65,.35);display:none;align-items:center;justify-content:center;z-index:30;padding:22px;backdrop-filter:blur(5px)
+}
+.modal.show{display:flex}
+.modalBox{width:min(100%,430px);background:#fffaf6;border-radius:28px;padding:23px;text-align:center;box-shadow:0 25px 80px rgba(50,35,45,.25)}
+.bigMouse{font-size:70px}
+.modal h2{margin:4px 0 8px;font-size:25px}
+.modal p{color:var(--muted);font-weight:700;line-height:1.55;font-size:14px}
+.actions{display:flex;gap:9px;margin-top:16px}
+.actions button{flex:1;border:0;border-radius:16px;padding:12px;font-weight:900;cursor:pointer}
+.primary{background:#655c77;color:#fff}
+.secondary{background:#efe7e1;color:var(--ink)}
+@media(max-width:480px){
+  .app{padding:10px 10px 24px}
+  .hero{grid-template-columns:1fr 110px}
+  .story{padding:12px}
+  .mouse{width:66px;height:66px}
+  .story h1{font-size:18px}
+  .brand b{font-size:16px}
+  .board{gap:4px;padding:6px;border-width:4px}
+  .cell{border-radius:11px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="skyline">
+    <div class="taipei101"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span><span class="e"></span><span class="f"></span></div>
+  </div>
+
+  <div class="topbar">
+    <div class="brand"><b>🐭 鼠鼠搬家大作戰</b><small>TAIPEI MOUSE MOVING DAY</small></div>
+    <button class="sound" id="soundBtn" aria-label="音效">🔊</button>
+  </div>
+
+  <section class="hero">
+    <div class="card story">
+      <svg class="mouse" viewBox="0 0 100 100" aria-label="可愛老鼠">
+        <circle cx="30" cy="28" r="18" fill="#e7bfc1"/><circle cx="70" cy="28" r="18" fill="#e7bfc1"/>
+        <circle cx="30" cy="28" r="10" fill="#f8dedc"/><circle cx="70" cy="28" r="10" fill="#f8dedc"/>
+        <ellipse cx="50" cy="55" rx="35" ry="31" fill="#d9c9c6"/>
+        <circle cx="39" cy="50" r="4" fill="#51464d"/><circle cx="62" cy="50" r="4" fill="#51464d"/>
+        <circle cx="50" cy="61" r="6" fill="#cf8f96"/>
+        <path d="M44 68 Q50 73 56 68" fill="none" stroke="#6f5b64" stroke-width="3" stroke-linecap="round"/>
+        <path d="M20 60 H5M22 67 H8M80 60 H95M78 67 H92" stroke="#8d777d" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M31 84 Q20 91 12 84" fill="none" stroke="#c9989f" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <div><h1>台北租屋太難，<br>鼠鼠決定一路搬到豪宅。</h1><p>把 3 個相同物件連在一起升級。從一塊小起司，拚到有景觀陽台的鼠鼠豪宅！</p></div>
+    </div>
+    <div class="card next"><small>下一個</small><div class="nextTile" id="nextTile">🧀</div></div>
+  </section>
+
+  <div class="stats">
+    <div class="card stat"><small>⭐ 分數</small><strong id="score">0</strong></div>
+    <div class="card stat"><small>🔥 最高連鎖</small><strong id="bestCombo">0</strong></div>
+    <div class="card stat"><small>🏠 最佳住處</small><strong id="bestHome">起司</strong></div>
+  </div>
+
+  <div class="card goal">
+    <div class="goalIcon">🎯</div>
+    <div class="goalText"><b>目標：搬進「信義區鼠鼠景觀豪宅」</b><small id="goalText">目前：起司 × 0</small><div class="progress"><i id="progressBar"></i></div></div>
+  </div>
+
+  <div class="card boardWrap">
+    <div class="board" id="board"></div>
+    <div class="combo" id="comboText">COMBO ×2!</div>
+  </div>
+
+  <div class="tools">
+    <button class="tool" data-tool="clear"><span class="ico">🧹</span>清空一格<small>剩 <b id="clearCount">3</b> 次</small></button>
+    <button class="tool" data-tool="move"><span class="ico">🛵</span>搬家貨運<small>剩 <b id="moveCount">2</b> 次</small></button>
+    <button class="tool" data-tool="wild"><span class="ico">🐭</span>鼠鼠幫手<small>剩 <b id="wildCount">2</b> 次</small></button>
+  </div>
+
+  <p class="tip" id="tip">點一個空格，讓鼠鼠開始找房吧！</p>
+
+  <div class="card legend">
+    <b>搬家升級路線</b>
+    <div class="path" id="legend"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="winModal">
+  <div class="modalBox">
+    <div class="bigMouse">🐭✨</div>
+    <h2>鼠鼠真的住進豪宅啦！</h2>
+    <p>從一小塊起司一路搬到台北景觀豪宅。現在鼠鼠每天起床都能看見 101，房租……先不要問。</p>
+    <div class="actions"><button class="secondary" id="continueBtn">繼續擴建</button><button class="primary" id="restartBtn">重新找房</button></div>
+  </div>
+</div>
+
+<div class="modal" id="loseModal">
+  <div class="modalBox">
+    <div class="bigMouse">🐭📦</div>
+    <h2>台北又找不到房了！</h2>
+    <p>棋盤塞滿啦。鼠鼠先回紙箱冷靜一下，再挑戰一次豪宅夢。</p>
+    <div class="actions"><button class="primary" id="retryBtn">再搬一次</button></div>
+  </div>
+</div>
+
+<script>
+const SIZE = 6;
+const LEVELS = [
+  {icon:"🧀", name:"起司", color:"#f7e2a8", points:1},
+  {icon:"📦", name:"搬家紙箱", color:"#ecd2ae", points:4},
+  {icon:"🧺", name:"機車置物籃", color:"#d9e2d6", points:12},
+  {icon:"🪟", name:"小套房", color:"#cfdde6", points:35},
+  {icon:"🏚️", name:"頂樓加蓋", color:"#e5d2ca", points:100},
+  {icon:"🏢", name:"老公寓", color:"#d6cfe3", points:280},
+  {icon:"🏙️", name:"電梯大樓", color:"#c8d9d6", points:800},
+  {icon:"🏡", name:"庭院宅", color:"#dce0bd", points:2200},
+  {icon:"🏰", name:"信義區鼠鼠景觀豪宅", color:"#f0cfd6", points:6000}
+];
+let grid, nextLevel, score, bestCombo, tool, selected, counts, won, soundOn;
+
+const board = document.getElementById("board");
+const nextTile = document.getElementById("nextTile");
+const scoreEl = document.getElementById("score");
+const bestComboEl = document.getElementById("bestCombo");
+const bestHomeEl = document.getElementById("bestHome");
+const clearCountEl = document.getElementById("clearCount");
+const moveCountEl = document.getElementById("moveCount");
+const wildCountEl = document.getElementById("wildCount");
+const tip = document.getElementById("tip");
+const toast = document.getElementById("toast");
+const comboText = document.getElementById("comboText");
+const progressBar = document.getElementById("progressBar");
+const goalText = document.getElementById("goalText");
+const winModal = document.getElementById("winModal");
+const loseModal = document.getElementById("loseModal");
+
+function init(){
+  grid = Array(SIZE*SIZE).fill(null);
+  nextLevel = randNext();
+  score = 0; bestCombo = 0; tool = null; selected = null; won = false; soundOn = true;
+  counts = {clear:3, move:2, wild:2};
+  render();
+}
+function randNext(){
+  const r = Math.random();
+  if(r < .69) return 0;
+  if(r < .94) return 1;
+  return 2;
+}
+function neighbors(i){
+  const r=Math.floor(i/SIZE), c=i%SIZE, out=[];
+  if(r>0) out.push(i-SIZE); if(r<SIZE-1) out.push(i+SIZE);
+  if(c>0) out.push(i-1); if(c<SIZE-1) out.push(i+1);
+  return out;
+}
+function component(start, level){
+  const seen=new Set([start]), q=[start];
+  while(q.length){
+    const i=q.shift();
+    for(const n of neighbors(i)){
+      if(!seen.has(n) && grid[n]===level){seen.add(n);q.push(n)}
+    }
+  }
+  return [...seen];
+}
+function place(i){
+  if(grid[i]!==null) return;
+  grid[i]=nextLevel;
+  score += LEVELS[nextLevel].points;
+  beep(520,.05);
+  const combo = resolve(i);
+  if(combo>0){
+    bestCombo=Math.max(bestCombo,combo);
+    showCombo(combo+1);
+  }
+  nextLevel=randNext();
+  tool=null; selected=null;
+  render();
+  checkEnd();
+}
+function resolve(i){
+  let chain=0;
+  while(grid[i]!==null && grid[i]<LEVELS.length-1){
+    const lvl=grid[i];
+    const group=component(i,lvl);
+    if(group.length<3) break;
+    group.forEach(x=>{if(x!==i)grid[x]=null});
+    grid[i]=lvl+1;
+    chain++;
+    score += LEVELS[lvl+1].points * Math.max(2,chain+1);
+    pulse(i); beep(650+chain*130,.08);
+    if(grid[i]===LEVELS.length-1 && !won){
+      won=true; setTimeout(()=>winModal.classList.add("show"),450);
+    }
+  }
+  return chain;
+}
+function pulse(i){
+  requestAnimationFrame(()=>{const c=board.children[i];if(c){c.classList.remove("merge");void c.offsetWidth;c.classList.add("merge")}});
+}
+function showCombo(n){
+  if(n<2)return;
+  comboText.textContent="COMBO ×"+n+"!";
+  comboText.classList.remove("show"); void comboText.offsetWidth; comboText.classList.add("show");
+}
+function clickCell(i){
+  if(tool==="clear"){
+    if(grid[i]===null){say("這格已經是空的啦！");return}
+    grid[i]=null;counts.clear--;score=Math.max(0,score-5);tool=null;selected=null;beep(220,.08);render();return;
+  }
+  if(tool==="wild"){
+    if(grid[i]===null){say("先選一個有東西的格子，鼠鼠才知道要幫誰。");return}
+    const lvl=grid[i];
+    const ns=neighbors(i).filter(n=>grid[n]===null);
+    if(!ns.length){say("旁邊沒有空位放幫手！");return}
+    grid[ns[0]]=lvl; counts.wild--; tool=null; selected=null;
+    score += LEVELS[lvl].points; const combo=resolve(ns[0]); if(combo) showCombo(combo+1); render(); checkEnd(); return;
+  }
+  if(tool==="move"){
+    if(selected===null){
+      if(grid[i]===null){say("先點要搬走的物件。");return}
+      selected=i; tip.textContent="再點一個空格，叫機車貨運幫你搬過去。";render();return;
+    }else{
+      if(grid[i]!==null){say("目的地要是空格喔！");return}
+      grid[i]=grid[selected];grid[selected]=null;counts.move--;tool=null;selected=null;
+      beep(420,.06);const combo=resolve(i);if(combo)showCombo(combo+1);render();checkEnd();return;
+    }
+  }
+  if(grid[i]===null) place(i); else say("這格住鼠了，換個空格！");
+}
+function useTool(name){
+  if(counts[name]<=0){say("這個道具用完啦！");return}
+  tool = tool===name ? null : name; selected=null;
+  tip.textContent = tool==="clear" ? "點一格要清掉的物件。" :
+                    tool==="move" ? "先點要搬走的物件，再點空格。" :
+                    tool==="wild" ? "點一個物件，鼠鼠幫手會在旁邊複製同級物件。" :
+                    "點一個空格，讓鼠鼠開始找房吧！";
+  render();
+}
+function checkEnd(){
+  if(grid.every(x=>x!==null) && !hasMerge()){
+    setTimeout(()=>loseModal.classList.add("show"),400);
+  }
+}
+function hasMerge(){
+  for(let i=0;i<grid.length;i++) if(grid[i]!==null && component(i,grid[i]).length>=3) return true;
+  return false;
+}
+function render(){
+  board.innerHTML="";
+  grid.forEach((lvl,i)=>{
+    const c=document.createElement("button");
+    c.className="cell"+(lvl!==null?" filled":"")+(selected===i?" selected":"");
+    c.setAttribute("aria-label",lvl===null?"空格":LEVELS[lvl].name);
+    if(lvl!==null){
+      c.style.background=LEVELS[lvl].color;
+      c.innerHTML=`<span class="tile">${LEVELS[lvl].icon}</span>`;
+    }
+    c.onclick=()=>clickCell(i);
+    board.appendChild(c);
+  });
+  nextTile.textContent=LEVELS[nextLevel].icon;
+  nextTile.style.background=LEVELS[nextLevel].color;
+  scoreEl.textContent=score.toLocaleString();
+  bestComboEl.textContent=bestCombo;
+  const maxLvl=Math.max(0,...grid.map(x=>x===null?0:x));
+  bestHomeEl.textContent=LEVELS[maxLvl].name;
+  clearCountEl.textContent=counts.clear;moveCountEl.textContent=counts.move;wildCountEl.textContent=counts.wild;
+  document.querySelectorAll(".tool").forEach(b=>b.classList.toggle("active",b.dataset.tool===tool));
+  goalText.textContent=`目前最佳：${LEVELS[maxLvl].name}`;
+  progressBar.style.width=((maxLvl)/(LEVELS.length-1)*100)+"%";
+}
+function say(s){toast.textContent=s;toast.classList.add("show");clearTimeout(say.t);say.t=setTimeout(()=>toast.classList.remove("show"),1400)}
+function beep(freq,dur){
+  if(!soundOn)return;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext, ac=beep.ac||(beep.ac=new AC());
+    const o=ac.createOscillator(),g=ac.createGain();
+    o.frequency.value=freq;o.type="sine";g.gain.setValueAtTime(.035,ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+dur);
+    o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+dur);
+  }catch(e){}
+}
+document.querySelectorAll(".tool").forEach(b=>b.onclick=()=>useTool(b.dataset.tool));
+document.getElementById("soundBtn").onclick=e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?"🔊":"🔇"};
+document.getElementById("continueBtn").onclick=()=>winModal.classList.remove("show");
+document.getElementById("restartBtn").onclick=()=>{winModal.classList.remove("show");init()};
+document.getElementById("retryBtn").onclick=()=>{loseModal.classList.remove("show");init()};
+
+const legend=document.getElementById("legend");
+LEVELS.forEach(x=>{
+  const d=document.createElement("div");d.className="step";
+  d.innerHTML=`<span>${x.icon}</span><small>${x.name}</small>`;legend.appendChild(d);
+});
+init();
+</script>
+</body>
+</html>
